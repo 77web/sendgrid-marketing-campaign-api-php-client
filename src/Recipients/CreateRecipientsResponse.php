@@ -7,9 +7,9 @@ namespace Linkage\SendgridMarketingCampaignApiClient\Recipients;
 class CreateRecipientsResponse
 {
     /**
-     * @param array<int>    $errorIndices
-     * @param array<int>    $unmodifiedIndices
-     * @param array<string> $persistedRecipients
+     * @param array<int>                  $errorIndices
+     * @param array<int>                  $unmodifiedIndices
+     * @param array<string>               $persistedRecipients
      * @param array<CreateRecipientError> $errors
      */
     public function __construct(
@@ -34,5 +34,4 @@ class CreateRecipientsResponse
     {
         // do nothing
     }
-
 }
