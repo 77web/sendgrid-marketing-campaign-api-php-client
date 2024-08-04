@@ -58,7 +58,7 @@ readonly class Client implements ClientInterface
         AddMultipleRecipientsRequest $request,
     ): AddMultipleRecipientsResponse {
         return $this->requester->post(
-            sprintf('contactdb/lists/%d/recipients', $listId),
+            \sprintf('contactdb/lists/%d/recipients', $listId),
             $request,
             AddMultipleRecipientsResponse::class,
         );
@@ -84,7 +84,7 @@ readonly class Client implements ClientInterface
     public function scheduleCampaign(int $campaignId, ScheduleCampaignRequest $request): ScheduleCampaignResponse
     {
         return $this->requester->post(
-            sprintf('campaigns/%d/schedules', $campaignId),
+            \sprintf('campaigns/%d/schedules', $campaignId),
             $request,
             ScheduleCampaignResponse::class,
         );

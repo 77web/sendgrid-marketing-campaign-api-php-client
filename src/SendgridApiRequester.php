@@ -24,7 +24,7 @@ readonly class SendgridApiRequester
         $this->httpClient = $httpClient ?? new HttpClient([
             'base_uri' => 'https://api.sendgrid.com/v3/',
             'headers' => [
-                'Authorization' => sprintf('Bearer %s', $apiKey),
+                'Authorization' => \sprintf('Bearer %s', $apiKey),
                 'Content-Type' => 'application/json',
             ],
         ]);
@@ -52,7 +52,7 @@ readonly class SendgridApiRequester
         }
 
         $result = $this->serializer->deserialize($response->getBody()->getContents(), $responseClass, 'json');
-        \assert(\is_object($result) && $result instanceof $responseClass);
+        \assert($result instanceof $responseClass);
 
         return $result;
     }
@@ -117,7 +117,7 @@ readonly class SendgridApiRequester
         }
 
         $result = $this->serializer->deserialize($responseJson, $responseClass, 'json');
-        \assert(\is_object($result) && $result instanceof $responseClass);
+        \assert($result instanceof $responseClass);
 
         return $result;
     }
