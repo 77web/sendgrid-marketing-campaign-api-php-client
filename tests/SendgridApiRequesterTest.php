@@ -11,6 +11,10 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListRequest;
 use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientError;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsRequest;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\RecipientRequest;
 use Linkage\SendgridMarketingCampaignApiClient\SendgridApiClientException;
 use Linkage\SendgridMarketingCampaignApiClient\SendgridApiRequester;
 use Linkage\SendgridMarketingCampaignApiClient\SendgridApiServerException;
@@ -79,6 +83,57 @@ class SendgridApiRequesterTest extends TestCase
             new CreateContactListRequest('dummy-name'),
             CreateContactListResponse::class,
         );
+    }
+
+    public function testPostMultipleRecipients(): void
+    {
+        $json = <<<'EOJ'
+                {
+                  "error_count": 1,
+                  "error_indices": [
+                    2
+                  ],
+                  "unmodified_indices": [
+                    3
+                  ],
+                  "new_count": 2,
+                  "persisted_recipients": [
+                    "YUBh",
+                    "bWlsbGVyQG1pbGxlci50ZXN0"
+                  ],
+                  "updated_count": 0,
+                  "errors": [
+                    {
+                      "message": "Invalid email.",
+                      "error_indices": [
+                        2
+                      ]
+                    }
+                  ]
+                }
+            EOJ;
+        $this->guzzleClientMock->expects($this->once())
+            ->method('request')
+            ->willReturn(new Response(body: $json))
+        ;
+
+        /** @var CreateRecipientsResponse $actual */
+        $actual = $this->getSUT()->post(
+            '/dummy/path',
+            new CreateRecipientsRequest([
+                new RecipientRequest(email: 'example@example.com'),
+                new RecipientRequest(email: 'eexampexample@example.com'),
+                new RecipientRequest(email: 'invalid_email'),
+            ]),
+            CreateRecipientsResponse::class,
+        );
+
+        $this->assertInstanceOf(CreateRecipientsResponse::class, $actual);
+        $this->assertIsArray($actual->errors);
+        $this->assertCount(1, $actual->errors);
+        $this->assertInstanceOf(CreateRecipientError::class, $actual->errors[0]);
+        $this->assertSame('Invalid email.', $actual->errors[0]->message);
+        $this->assertSame([2], $actual->errors[0]->errorIndices);
     }
 
     private function getSUT(): SendgridApiRequester
