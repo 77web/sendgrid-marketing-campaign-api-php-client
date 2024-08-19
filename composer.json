@@ -10,7 +10,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^10.4",
-        "quartetcom/static-analysis-kit": "dev-fix/rector-deprecation@dev"
+        "quartetcom/static-analysis-kit": "^8.2"
     },
     "license": "MIT",
     "autoload": {
