@@ -10,7 +10,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^10.4",
-        "quartetcom/static-analysis-kit": "dev-fix/rector-deprecation@dev"
+        "quartetcom/static-analysis-kit": "8.2.x-dev"
     },
     "license": "MIT",
     "autoload": {
@@ -49,11 +49,5 @@
         "fix:rector": "Tries to fix code in this project automatically with rector enabled.",
         "fix:risky": "Tries to fix code in this project automatically with risky rules.",
         "test": "Runs the tests."
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/77web/quartetcom-static-analysis-kit.git"
-        }
-    ]
+    }
 }
