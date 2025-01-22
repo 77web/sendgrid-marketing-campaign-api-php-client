@@ -6,13 +6,13 @@
 composer require linkage/sendgrid-marketing-campaign-api-client
 ```
 
-## usage
+## usage for Legacy Marketing Campaign
 
 ```php
 
 $apiKey = 'get your api key from sendgrid admin screen';
 
-$sendgridClient = new \Linkage\SendgridMarketingCampaignApiClient\Client(
+$sendgridClient = new \Linkage\SendgridMarketingCampaignApiClient\LegacyClient(
     new \Linkage\SendgridMarketingCampaignApiClient\SendgridApiRequester($apiKey),
 );
 try {
