@@ -129,7 +129,6 @@ class SendgridApiRequesterTest extends TestCase
         );
 
         $this->assertInstanceOf(CreateRecipientsResponse::class, $actual);
-        $this->assertIsArray($actual->errors);
         $this->assertCount(1, $actual->errors);
         $this->assertInstanceOf(CreateRecipientError::class, $actual->errors[0]);
         $this->assertSame('Invalid email.', $actual->errors[0]->message);

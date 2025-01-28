@@ -10,7 +10,7 @@ namespace Linkage\SendgridMarketingCampaignApiClient\ContactList;
 class AddMultipleRecipientsRequest extends \ArrayIterator
 {
     /**
-     * @param array<string> $recipientIds
+     * @param array<int, string> $recipientIds
      */
     public function __construct(
         array $recipientIds,

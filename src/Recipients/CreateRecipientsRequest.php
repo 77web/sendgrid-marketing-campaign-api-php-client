@@ -10,7 +10,7 @@ namespace Linkage\SendgridMarketingCampaignApiClient\Recipients;
 class CreateRecipientsRequest extends \ArrayIterator
 {
     /**
-     * @param array<RecipientRequest> $recipients
+     * @param array<int, RecipientRequest> $recipients
      */
     public function __construct(
         array $recipients,
