@@ -17,7 +17,7 @@ $sendgridClient = new \Linkage\SendgridMarketingCampaignApiClient\LegacyClient(
 );
 try {
     $sendgridClient->createContactList(
-        new \Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListRequest('my new contact list'),
+        new \Linkage\SendgridMarketingCampaignApiClient\Legacy\ContactList\CreateContactListRequest('my new contact list'),
     );
 } catch (\Linkage\SendgridMarketingCampaignApiClient\SendgridApiClientException $e) {
     // handle client error

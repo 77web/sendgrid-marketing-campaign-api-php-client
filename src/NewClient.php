@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Linkage\SendgridMarketingCampaignApiClient;
 
-use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignRequest;
-use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignResponse;
-use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignRequest;
-use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignResponse;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsRequest;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsResponse;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListRequest;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListResponse;
-use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsRequest;
-use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponseInterface;
 
 class NewClient implements ClientInterface
 {
@@ -27,12 +27,12 @@ class NewClient implements ClientInterface
      * @throws SendgridApiServerException
      */
     public function createContactList(
-        CreateContactListRequest $request,
-    ): CreateContactListResponse {
+        CreateContactListRequestInterface $request,
+    ): CreateContactListResponseInterface {
         return $this->requester->post(
             'marketing/lists',
             $request,
-            CreateContactListResponse::class,
+            CreateContactListResponseInterface::class,
         );
     }
 
@@ -40,12 +40,12 @@ class NewClient implements ClientInterface
      * @throws SendgridApiClientException
      * @throws SendgridApiServerException
      */
-    public function createRecipients(CreateRecipientsRequest $request): CreateRecipientsResponse
+    public function createRecipients(CreateRecipientsRequestInterface $request): CreateRecipientsResponseInterface
     {
         return $this->requester->post(
             'marketing/contacts',
             $request,
-            CreateRecipientsResponse::class,
+            CreateRecipientsResponseInterface::class,
         );
     }
 
@@ -55,8 +55,8 @@ class NewClient implements ClientInterface
      */
     public function addMultipleRecipientsToContactList(
         int $listId,
-        AddMultipleRecipientsRequest $request,
-    ): AddMultipleRecipientsResponse {
+        AddMultipleRecipientsRequestInterface $request,
+    ): AddMultipleRecipientsResponseInterface {
         throw new \LogicException('New marketing api does not support this api. Use createRecipients instead.');
     }
 
@@ -64,12 +64,12 @@ class NewClient implements ClientInterface
      * @throws SendgridApiClientException
      * @throws SendgridApiServerException
      */
-    public function createCampaign(CreateCampaignRequest $request): CreateCampaignResponse
+    public function createCampaign(CreateCampaignRequestInterface $request): CreateCampaignResponseInterface
     {
         return $this->requester->post(
             'marketing/singlesends',
             $request,
-            CreateCampaignResponse::class,
+            CreateCampaignResponseInterface::class,
         );
     }
 
@@ -77,12 +77,12 @@ class NewClient implements ClientInterface
      * @throws SendgridApiClientException
      * @throws SendgridApiServerException
      */
-    public function scheduleCampaign(int $campaignId, ScheduleCampaignRequest $request): ScheduleCampaignResponse
+    public function scheduleCampaign(int $campaignId, ScheduleCampaignRequestInterface $request): ScheduleCampaignResponseInterface
     {
         return $this->requester->post(
             \sprintf('marketing/singlesends/%d/schedules', $campaignId),
             $request,
-            ScheduleCampaignResponse::class,
+            ScheduleCampaignResponseInterface::class,
         );
     }
 }

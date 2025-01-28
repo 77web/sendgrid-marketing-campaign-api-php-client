@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Linkage\SendgridMarketingCampaignApiClient;
 
-use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignRequest;
-use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignResponse;
-use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignRequest;
-use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignResponse;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsRequest;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsResponse;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListRequest;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListResponse;
-use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsRequest;
-use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponseInterface;
 
 interface ClientInterface
 {
@@ -23,7 +23,7 @@ interface ClientInterface
      * @throws SendgridApiClientException
      * @throws SendgridApiServerException
      */
-    public function createContactList(CreateContactListRequest $request): CreateContactListResponse;
+    public function createContactList(CreateContactListRequestInterface $request): CreateContactListResponseInterface;
 
     /**
      * @see https://sendgrid.kke.co.jp/docs/API_Reference/Web_API_v3/Marketing_Campaigns/contactdb.html#Add-Multiple-Recipients-POST
@@ -31,7 +31,7 @@ interface ClientInterface
      * @throws SendgridApiClientException
      * @throws SendgridApiServerException
      */
-    public function createRecipients(CreateRecipientsRequest $request): CreateRecipientsResponse;
+    public function createRecipients(CreateRecipientsRequestInterface $request): CreateRecipientsResponseInterface;
 
     /**
      * @see https://sendgrid.kke.co.jp/docs/API_Reference/Web_API_v3/Marketing_Campaigns/contactdb.html#Add-Multiple-Recipients-to-a-List-POST
@@ -39,7 +39,7 @@ interface ClientInterface
      * @throws SendgridApiClientException
      * @throws SendgridApiServerException
      */
-    public function addMultipleRecipientsToContactList(int $listId, AddMultipleRecipientsRequest $request): AddMultipleRecipientsResponse;
+    public function addMultipleRecipientsToContactList(int $listId, AddMultipleRecipientsRequestInterface $request): AddMultipleRecipientsResponseInterface;
 
     /**
      * @see https://sendgrid.kke.co.jp/docs/API_Reference/Web_API_v3/Marketing_Campaigns/campaigns.html#Create-a-Campaign-POST
@@ -47,7 +47,7 @@ interface ClientInterface
      * @throws SendgridApiClientException
      * @throws SendgridApiServerException
      */
-    public function createCampaign(CreateCampaignRequest $request): CreateCampaignResponse;
+    public function createCampaign(CreateCampaignRequestInterface $request): CreateCampaignResponseInterface;
 
     /**
      * @see https://sendgrid.kke.co.jp/docs/API_Reference/Web_API_v3/Marketing_Campaigns/campaigns.html#Send-a-Campaign-POST
@@ -55,5 +55,5 @@ interface ClientInterface
      * @throws SendgridApiClientException
      * @throws SendgridApiServerException
      */
-    public function scheduleCampaign(int $campaignId, ScheduleCampaignRequest $request): ScheduleCampaignResponse;
+    public function scheduleCampaign(int $campaignId, ScheduleCampaignRequestInterface $request): ScheduleCampaignResponseInterface;
 }

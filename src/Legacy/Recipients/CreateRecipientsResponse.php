@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Linkage\SendgridMarketingCampaignApiClient\Recipients;
+namespace Linkage\SendgridMarketingCampaignApiClient\Legacy\Recipients;
 
-class CreateRecipientsResponse
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponseInterface;
+
+class CreateRecipientsResponse implements CreateRecipientsResponseInterface
 {
     /**
      * @param array<int>                  $errorIndices

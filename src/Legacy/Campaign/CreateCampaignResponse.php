@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Linkage\SendgridMarketingCampaignApiClient\Campaign;
+namespace Linkage\SendgridMarketingCampaignApiClient\Legacy\Campaign;
 
-readonly class CreateCampaignResponse
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignResponseInterface;
+
+class CreateCampaignResponse implements CreateCampaignResponseInterface
 {
     /**
      * @param array<int>    $listIds

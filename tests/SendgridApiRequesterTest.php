@@ -9,12 +9,14 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListRequest;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListResponse;
-use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientError;
-use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsRequest;
-use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponse;
-use Linkage\SendgridMarketingCampaignApiClient\Recipients\RecipientRequest;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Legacy\ContactList\CreateContactListRequest;
+use Linkage\SendgridMarketingCampaignApiClient\Legacy\ContactList\CreateContactListResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Legacy\Recipients\CreateRecipientsRequest;
+use Linkage\SendgridMarketingCampaignApiClient\Legacy\Recipients\CreateRecipientsResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Legacy\Recipients\RecipientRequest;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientErrorInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponseInterface;
 use Linkage\SendgridMarketingCampaignApiClient\SendgridApiClientException;
 use Linkage\SendgridMarketingCampaignApiClient\SendgridApiRequester;
 use Linkage\SendgridMarketingCampaignApiClient\SendgridApiServerException;
@@ -40,7 +42,7 @@ class SendgridApiRequesterTest extends TestCase
             ->willReturn(new Response(body: (string) json_encode(['id' => 1, 'name' => 'dummy-name', 'recipient_count' => 0])))
         ;
 
-        /** @var CreateContactListResponse $actual */
+        /** @var CreateContactListResponseInterface $actual */
         $actual = $this->getSUT()->post(
             '/dummy/path',
             new CreateContactListRequest('dummy-name'),
@@ -117,7 +119,7 @@ class SendgridApiRequesterTest extends TestCase
             ->willReturn(new Response(body: $json))
         ;
 
-        /** @var CreateRecipientsResponse $actual */
+        /** @var CreateRecipientsResponseInterface $actual */
         $actual = $this->getSUT()->post(
             '/dummy/path',
             new CreateRecipientsRequest([
@@ -130,7 +132,7 @@ class SendgridApiRequesterTest extends TestCase
 
         $this->assertInstanceOf(CreateRecipientsResponse::class, $actual);
         $this->assertCount(1, $actual->errors);
-        $this->assertInstanceOf(CreateRecipientError::class, $actual->errors[0]);
+        $this->assertInstanceOf(CreateRecipientErrorInterface::class, $actual->errors[0]);
         $this->assertSame('Invalid email.', $actual->errors[0]->message);
         $this->assertSame([2], $actual->errors[0]->errorIndices);
     }

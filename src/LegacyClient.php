@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace Linkage\SendgridMarketingCampaignApiClient;
 
-use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignRequest;
-use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignResponse;
-use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignRequest;
-use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignResponse;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsRequest;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsResponse;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListRequest;
-use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListResponse;
-use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsRequest;
-use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Legacy\Campaign\CreateCampaignResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Legacy\Campaign\ScheduleCampaignResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Legacy\ContactList\AddMultipleRecipientsResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Legacy\ContactList\CreateContactListResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Legacy\Recipients\CreateRecipientsResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponseInterface;
 
 class LegacyClient implements ClientInterface
 {
@@ -27,8 +32,8 @@ class LegacyClient implements ClientInterface
      * @throws SendgridApiServerException
      */
     public function createContactList(
-        CreateContactListRequest $request,
-    ): CreateContactListResponse {
+        CreateContactListRequestInterface $request,
+    ): CreateContactListResponseInterface {
         return $this->requester->post(
             'contactdb/lists',
             $request,
@@ -40,7 +45,7 @@ class LegacyClient implements ClientInterface
      * @throws SendgridApiClientException
      * @throws SendgridApiServerException
      */
-    public function createRecipients(CreateRecipientsRequest $request): CreateRecipientsResponse
+    public function createRecipients(CreateRecipientsRequestInterface $request): CreateRecipientsResponseInterface
     {
         return $this->requester->post(
             'contactdb/recipients',
@@ -55,8 +60,8 @@ class LegacyClient implements ClientInterface
      */
     public function addMultipleRecipientsToContactList(
         int $listId,
-        AddMultipleRecipientsRequest $request,
-    ): AddMultipleRecipientsResponse {
+        AddMultipleRecipientsRequestInterface $request,
+    ): AddMultipleRecipientsResponseInterface {
         return $this->requester->post(
             \sprintf('contactdb/lists/%d/recipients', $listId),
             $request,
@@ -68,7 +73,7 @@ class LegacyClient implements ClientInterface
      * @throws SendgridApiClientException
      * @throws SendgridApiServerException
      */
-    public function createCampaign(CreateCampaignRequest $request): CreateCampaignResponse
+    public function createCampaign(CreateCampaignRequestInterface $request): CreateCampaignResponseInterface
     {
         return $this->requester->post(
             'campaigns',
@@ -81,7 +86,7 @@ class LegacyClient implements ClientInterface
      * @throws SendgridApiClientException
      * @throws SendgridApiServerException
      */
-    public function scheduleCampaign(int $campaignId, ScheduleCampaignRequest $request): ScheduleCampaignResponse
+    public function scheduleCampaign(int $campaignId, ScheduleCampaignRequestInterface $request): ScheduleCampaignResponseInterface
     {
         return $this->requester->post(
             \sprintf('campaigns/%d/schedules', $campaignId),
