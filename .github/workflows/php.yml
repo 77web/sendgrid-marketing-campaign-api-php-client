@@ -13,7 +13,8 @@ jobs:
     strategy:
       matrix:
         php:
-          - '8.2'
+          - '8.3'
+          - '8.4'
     steps:
       - uses: actions/checkout@v3
 
@@ -40,6 +41,8 @@ jobs:
 
       - name: Coding standards
         run: composer cs
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: true
 
       - name: Static analysis
         run: composer phpstan
