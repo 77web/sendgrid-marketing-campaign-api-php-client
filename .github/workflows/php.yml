@@ -34,30 +34,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-${{ matrix.php }}-
 
-      - name: Persist analyser caches
-        id: analyser-cache
-        uses: actions/cache@v3
-        with:
-          path: .cache
-          key: ${{ runner.os }}-analyser-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-analyser-${{ matrix.php }}-
-
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress
 
-      - name: Analyse code
-        run: composer analyse
+      - name: Coding standards
+        run: composer cs
+
+      - name: Static analysis
+        run: composer phpstan
 
       - name: Run tests
         run: composer test
-
-#      - name: Qodana Scan
-#        uses: JetBrains/qodana-action@v2022.3.4
-#        env:
-#          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
-#
-#      - uses: github/codeql-action/upload-sarif@v2
-#        with:
-#          sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json

@@ -1,7 +1,5 @@
-includes:
-    - ./vendor/quartetcom/static-analysis-kit/phpstan.include.neon
-
 parameters:
+    level: max
     paths:
         - src
         - tests
