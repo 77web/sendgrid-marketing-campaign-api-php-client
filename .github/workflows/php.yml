@@ -41,6 +41,8 @@ jobs:
 
       - name: Coding standards
         run: composer cs
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: true
 
       - name: Static analysis
         run: composer phpstan
