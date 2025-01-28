@@ -12,7 +12,7 @@ use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipients
 class AddMultipleRecipientsRequest extends \ArrayIterator implements AddMultipleRecipientsRequestInterface
 {
     /**
-     * @param array<string> $recipientIds
+     * @param array<int, string> $recipientIds
      */
     public function __construct(
         array $recipientIds,
