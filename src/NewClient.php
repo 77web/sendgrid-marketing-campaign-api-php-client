@@ -16,6 +16,10 @@ use Linkage\SendgridMarketingCampaignApiClient\New\Campaign\CreateCampaignReques
 use Linkage\SendgridMarketingCampaignApiClient\New\Campaign\CreateCampaignResponse;
 use Linkage\SendgridMarketingCampaignApiClient\New\Campaign\ScheduleCampaignRequest;
 use Linkage\SendgridMarketingCampaignApiClient\New\Campaign\ScheduleCampaignResponse;
+use Linkage\SendgridMarketingCampaignApiClient\New\ContactList\CreateContactListRequest;
+use Linkage\SendgridMarketingCampaignApiClient\New\ContactList\CreateContactListResponse;
+use Linkage\SendgridMarketingCampaignApiClient\New\Recipients\CreateRecipientsRequest;
+use Linkage\SendgridMarketingCampaignApiClient\New\Recipients\CreateRecipientsResponse;
 use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsRequestInterface;
 use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponseInterface;
 
@@ -33,10 +37,11 @@ class NewClient implements ClientInterface
     public function createContactList(
         CreateContactListRequestInterface $request,
     ): CreateContactListResponseInterface {
+        assert($request instanceof CreateContactListRequest);
         return $this->requester->post(
             'marketing/lists',
             $request,
-            CreateContactListResponseInterface::class,
+            CreateContactListResponse::class,
         );
     }
 
@@ -46,10 +51,11 @@ class NewClient implements ClientInterface
      */
     public function createRecipients(CreateRecipientsRequestInterface $request): CreateRecipientsResponseInterface
     {
+        assert($request instanceof CreateRecipientsRequest);
         return $this->requester->post(
             'marketing/contacts',
             $request,
-            CreateRecipientsResponseInterface::class,
+            CreateRecipientsResponse::class,
         );
     }
 
