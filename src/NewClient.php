@@ -12,6 +12,10 @@ use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipients
 use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsResponseInterface;
 use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListRequestInterface;
 use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\New\Campaign\CreateCampaignRequest;
+use Linkage\SendgridMarketingCampaignApiClient\New\Campaign\CreateCampaignResponse;
+use Linkage\SendgridMarketingCampaignApiClient\New\Campaign\ScheduleCampaignRequest;
+use Linkage\SendgridMarketingCampaignApiClient\New\Campaign\ScheduleCampaignResponse;
 use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsRequestInterface;
 use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponseInterface;
 
@@ -62,10 +66,11 @@ class NewClient implements ClientInterface
      */
     public function createCampaign(CreateCampaignRequestInterface $request): CreateCampaignResponseInterface
     {
+        assert($request instanceof CreateCampaignRequest);
         return $this->requester->post(
             'marketing/singlesends',
             $request,
-            CreateCampaignResponseInterface::class,
+            CreateCampaignResponse::class,
         );
     }
 
@@ -75,10 +80,11 @@ class NewClient implements ClientInterface
      */
     public function scheduleCampaign(int $campaignId, ScheduleCampaignRequestInterface $request): ScheduleCampaignResponseInterface
     {
+        assert($request instanceof ScheduleCampaignRequest);
         return $this->requester->post(
-            \sprintf('marketing/singlesends/%d/schedules', $campaignId),
+            \sprintf('marketing/singlesends/%d/schedule', $campaignId),
             $request,
-            ScheduleCampaignResponseInterface::class,
+            ScheduleCampaignResponse::class,
         );
     }
 }
