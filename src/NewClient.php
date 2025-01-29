@@ -49,10 +49,6 @@ class NewClient implements ClientInterface
         );
     }
 
-    /**
-     * @throws SendgridApiClientException
-     * @throws SendgridApiServerException
-     */
     public function addMultipleRecipientsToContactList(
         int $listId,
         AddMultipleRecipientsRequestInterface $request,
