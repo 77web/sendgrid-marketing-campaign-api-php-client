@@ -1,0 +1,96 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Linkage\SendgridMarketingCampaignApiClient;
+
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\ScheduleCampaignResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\AddMultipleRecipientsResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\ContactList\CreateContactListResponseInterface;
+use Linkage\SendgridMarketingCampaignApiClient\New\Campaign\CreateCampaignRequest;
+use Linkage\SendgridMarketingCampaignApiClient\New\Campaign\CreateCampaignResponse;
+use Linkage\SendgridMarketingCampaignApiClient\New\Campaign\ScheduleCampaignRequest;
+use Linkage\SendgridMarketingCampaignApiClient\New\Campaign\ScheduleCampaignResponse;
+use Linkage\SendgridMarketingCampaignApiClient\New\ContactList\CreateContactListRequest;
+use Linkage\SendgridMarketingCampaignApiClient\New\ContactList\CreateContactListResponse;
+use Linkage\SendgridMarketingCampaignApiClient\New\Recipients\CreateRecipientsRequest;
+use Linkage\SendgridMarketingCampaignApiClient\New\Recipients\CreateRecipientsResponse;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsRequestInterface;
+use Linkage\SendgridMarketingCampaignApiClient\Recipients\CreateRecipientsResponseInterface;
+
+class NewClient implements ClientInterface
+{
+    public function __construct(
+        private readonly SendgridApiRequester $requester,
+    ) {
+    }
+
+    /**
+     * @throws SendgridApiClientException
+     * @throws SendgridApiServerException
+     */
+    public function createContactList(
+        CreateContactListRequestInterface $request,
+    ): CreateContactListResponseInterface {
+        assert($request instanceof CreateContactListRequest);
+        return $this->requester->post(
+            'marketing/lists',
+            $request,
+            CreateContactListResponse::class,
+        );
+    }
+
+    /**
+     * @throws SendgridApiClientException
+     * @throws SendgridApiServerException
+     */
+    public function createRecipients(CreateRecipientsRequestInterface $request): CreateRecipientsResponseInterface
+    {
+        assert($request instanceof CreateRecipientsRequest);
+        return $this->requester->post(
+            'marketing/contacts',
+            $request,
+            CreateRecipientsResponse::class,
+        );
+    }
+
+    public function addMultipleRecipientsToContactList(
+        int $listId,
+        AddMultipleRecipientsRequestInterface $request,
+    ): AddMultipleRecipientsResponseInterface {
+        throw new \LogicException('New marketing api does not support this api. Use createRecipients instead.');
+    }
+
+    /**
+     * @throws SendgridApiClientException
+     * @throws SendgridApiServerException
+     */
+    public function createCampaign(CreateCampaignRequestInterface $request): CreateCampaignResponseInterface
+    {
+        assert($request instanceof CreateCampaignRequest);
+        return $this->requester->post(
+            'marketing/singlesends',
+            $request,
+            CreateCampaignResponse::class,
+        );
+    }
+
+    /**
+     * @throws SendgridApiClientException
+     * @throws SendgridApiServerException
+     */
+    public function scheduleCampaign(int $campaignId, ScheduleCampaignRequestInterface $request): ScheduleCampaignResponseInterface
+    {
+        assert($request instanceof ScheduleCampaignRequest);
+        return $this->requester->post(
+            \sprintf('marketing/singlesends/%d/schedule', $campaignId),
+            $request,
+            ScheduleCampaignResponse::class,
+        );
+    }
+}

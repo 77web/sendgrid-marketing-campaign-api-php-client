@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Linkage\SendgridMarketingCampaignApiClient\Campaign;
+namespace Linkage\SendgridMarketingCampaignApiClient\Legacy\Campaign;
 
-readonly class CreateCampaignRequest
+use Linkage\SendgridMarketingCampaignApiClient\Campaign\CreateCampaignRequestInterface;
+
+class CreateCampaignRequest implements CreateCampaignRequestInterface
 {
     /**
      * @param null|array<int>    $listIds
