@@ -56,4 +56,20 @@ interface ClientInterface
      * @throws SendgridApiServerException
      */
     public function scheduleCampaign(int $campaignId, ScheduleCampaignRequest $request): ScheduleCampaignResponse;
+
+    /**
+     * @see https://sendgrid.kke.co.jp/docs/API_Reference/Web_API_v3/Marketing_Campaigns/contactdb.html#Delete-a-List-DELETE
+     *
+     * @throws SendgridApiClientException
+     * @throws SendgridApiServerException
+     */
+    public function deleteContactList(int $listId): void;
+
+    /**
+     * @see https://sendgrid.kke.co.jp/docs/API_Reference/Web_API_v3/Marketing_Campaigns/campaigns.html#Delete-a-Campaign-DELETE
+     *
+     * @throws SendgridApiClientException
+     * @throws SendgridApiServerException
+     */
+    public function deleteCampaign(int $campaignId): void;
 }

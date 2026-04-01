@@ -88,6 +88,21 @@ readonly class SendgridApiRequester
     }
 
     /**
+     * @throws SendgridApiClientException
+     * @throws SendgridApiServerException
+     */
+    public function delete(string $path): void
+    {
+        try {
+            $this->httpClient->request('DELETE', $path);
+        } catch (ClientException $e) {
+            throw new SendgridApiClientException($e->getResponse()->getBody()->getContents(), previous: $e);
+        } catch (ServerException|GuzzleException $e) {
+            throw new SendgridApiServerException($e->getMessage(), code: $e->getCode(), previous: $e);
+        }
+    }
+
+    /**
      * @template T of object
      *
      * @param class-string<T> $responseClass
