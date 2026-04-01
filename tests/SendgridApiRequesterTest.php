@@ -142,4 +142,39 @@ class SendgridApiRequesterTest extends TestCase
             $this->guzzleClientMock,
         );
     }
+
+    public function testDelete(): void
+    {
+        $this->guzzleClientMock->expects($this->once())
+            ->method('request')
+            ->with('DELETE', '/dummy/path')
+            ->willReturn(new Response(204))
+        ;
+
+        $this->getSUT()->delete('/dummy/path');
+    }
+
+    public function testDeleteClientError(): void
+    {
+        $this->expectException(SendgridApiClientException::class);
+
+        $this->guzzleClientMock->expects($this->once())
+            ->method('request')
+            ->willThrowException(new ClientException('dummy', $this->createMock(Request::class), $this->createMock(Response::class)))
+        ;
+
+        $this->getSUT()->delete('/dummy/path');
+    }
+
+    public function testDeleteServerError(): void
+    {
+        $this->expectException(SendgridApiServerException::class);
+
+        $this->guzzleClientMock->expects($this->once())
+            ->method('request')
+            ->willThrowException(new ServerException('dummy', $this->createMock(Request::class), $this->createMock(Response::class)))
+        ;
+
+        $this->getSUT()->delete('/dummy/path');
+    }
 }

@@ -89,4 +89,22 @@ readonly class Client implements ClientInterface
             ScheduleCampaignResponse::class,
         );
     }
+
+    /**
+     * @throws SendgridApiClientException
+     * @throws SendgridApiServerException
+     */
+    public function deleteContactList(int $listId): void
+    {
+        $this->requester->delete(\sprintf('contactdb/lists/%d', $listId));
+    }
+
+    /**
+     * @throws SendgridApiClientException
+     * @throws SendgridApiServerException
+     */
+    public function deleteCampaign(int $campaignId): void
+    {
+        $this->requester->delete(\sprintf('campaigns/%d', $campaignId));
+    }
 }
